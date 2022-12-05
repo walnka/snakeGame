@@ -124,10 +124,12 @@ class Game():
             Use the SPEED constant to set how often the move tasks
             are generated.
         """
-        SPEED = 100     #speed of snake updates (msec)
+        SPEED = 100     #speed of snake updates (changed to use milliseconds)
         while self.gameNotOver:
             #complete the method implementation below
+            #wait SPEED milliseconds and then call move
             gui.root.after(SPEED, self.move)
+            #wait SPEED milliseconds and then queue move task
             gui.root.after(SPEED, gameQueue.put_nowait({"move": self.snakeCoordinates}))
 
 
@@ -202,7 +204,9 @@ class Game():
         """
         lastX, lastY = self.snakeCoordinates[-1]
         #complete the method implementation below
+        #get current snake direction
         currentDirection = self.direction
+        #check direction and depending on direction increase or decrease snake coordinate by 10 in either x or y
         if currentDirection == "Left":
             return (lastX-10, lastY)
         elif currentDirection == "Right":
@@ -222,10 +226,15 @@ class Game():
         """
         x, y = snakeCoordinates
         #complete the method implementation below
+        #boolean expression for if the coordinates are out of bounds
         outOfBounds = x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT
+        #boolean expression for it the coordinates are in the snake's current coordinates
         cannibal = snakeCoordinates in self.snakeCoordinates
+        #check if either boolean is true and if so end the game
         if outOfBounds or cannibal:
+            #set gameNotOver to False to stop movement
             self.gameNotOver = False
+            #queue game_over task in gameQueue
             gameQueue.put_nowait({"game_over": True})
 
 
@@ -243,9 +252,12 @@ class Game():
         """
         THRESHOLD = 15   #sets how close prey can be to borders
         #complete the method implementation below
+        #generate random x and y coordinates within the threshold at increments of 10
         x = random.randrange(THRESHOLD, WINDOW_WIDTH-THRESHOLD, 10)
         y = random.randrange(THRESHOLD, WINDOW_HEIGHT-THRESHOLD, 10)
+        #set prey coords as described in the given function description
         preyCoords = [x - 5, y - 5, x + 5, y + 5]
+        #queue prey task in queue
         gameQueue.put_nowait({"prey": preyCoords})
 
 
