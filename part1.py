@@ -124,13 +124,13 @@ class Game():
             Use the SPEED constant to set how often the move tasks
             are generated.
         """
-        SPEED = 100     #speed of snake updates (changed to use milliseconds)
+        SPEED = 0.3     #speed of snake updates (in secs)
         while self.gameNotOver:
             #complete the method implementation below
-            #wait SPEED milliseconds and then call move
-            gui.root.after(SPEED, self.move)
-            #wait SPEED milliseconds and then queue move task
-            gui.root.after(SPEED, gameQueue.put_nowait({"move": self.snakeCoordinates}))
+            #wait SPEED seconds and then call move
+            gui.root.after(int(1000*SPEED),self.move())
+            #wait SPEED seconds and then queue move task
+            self.queue.put({"move": self.snakeCoordinates})
 
 
     def whenAnArrowKeyIsPressed(self, e) -> None:
@@ -178,7 +178,7 @@ class Game():
             #increment score
             self.score += 1
             #add score task to queue
-            gameQueue.put_nowait({"score": self.score})
+            self.queue.put({"score": self.score})
             #get tail tuple and create tail direction for adding length to snake
             tail = self.snakeCoordinates[0]
             tailDirection = (tail[0]-self.snakeCoordinates[1][0], tail[1]-self.snakeCoordinates[1][1])
@@ -235,9 +235,7 @@ class Game():
             #set gameNotOver to False to stop movement
             self.gameNotOver = False
             #queue game_over task in gameQueue
-            gameQueue.put_nowait({"game_over": True})
-
-
+            self.queue.put({"game_over": True})
 
     def createNewPrey(self) -> None:
         """
@@ -258,7 +256,7 @@ class Game():
         #set prey coords as described in the given function description
         preyCoords = [x - 5, y - 5, x + 5, y + 5]
         #queue prey task in queue
-        gameQueue.put_nowait({"prey": preyCoords})
+        self.queue.put({"prey": preyCoords})
 
 
 if __name__ == "__main__":
