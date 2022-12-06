@@ -2,7 +2,7 @@ from socket import *
 import random
 import time
 
-# Set Up Local Host connection as server
+# Set Up Local Host connection as server (based off of lecture notes from CPEN 333 slide)
 serverName = "localhost"
 serverPort=12000
 serverSocket=socket(AF_INET,SOCK_DGRAM) # setup as UDP socket protocol
@@ -12,7 +12,7 @@ print("The server is ready to receive")
 # while the server is running wait to receive messages
 while True:
     # Recieve message
-    message, clientAddress = serverSocket.recvfrom(2048) # receive up to 2048bytes from client
+    message, clientAddress = serverSocket.recvfrom(32) # receive up to 32 bytes from client (based off of lecture notes from CPEN 333 slide)
     # Generate random 10% chance that message is lost
     if ( round(random.uniform(1,10),0)%10 != 0):
         # Delay for random time between 5ms-50ms
