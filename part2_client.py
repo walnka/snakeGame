@@ -1,3 +1,7 @@
+# UDP Socket Server
+# Group Name: G29
+# Group Members: Willem Van Dam, Liam Foster
+
 from socket import *
 import time
 
@@ -19,7 +23,7 @@ for packetNum in range(numPackets):
     # try block to deal with timout if packet is dropped
     try:
         modifiedMessage, serverAddress = clientSocket.recvfrom(32) # receive message (based off of template in CPEN 333 lecture slides)
-        rtt = round((time.time() - packetSentTime)*1000,3) # calculate RTT in ms and round to neares us
+        rtt = round((time.time() - packetSentTime)*1000,3) # calculate RTT in ms and round to nearest us
         print(modifiedMessage.decode(), ": time = ", rtt, "ms") # print received message and RTT
     except:
         print(f"Request for packet {packetNum+1} timed out") # Timeout error message if packet was dropped
