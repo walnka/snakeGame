@@ -124,13 +124,15 @@ class Game():
             Use the SPEED constant to set how often the move tasks
             are generated.
         """
-        SPEED = 0.3     #speed of snake updates (in secs)
+        SPEED = 0.15     #speed of snake updates (in secs)
         while self.gameNotOver:
             #complete the method implementation below
             #wait SPEED seconds and then call move
-            gui.root.after(int(1000*SPEED),self.move())
-            #wait SPEED seconds and then queue move task
+            time.sleep(SPEED)
+            self.move()
+            #add move task to queue
             self.queue.put({"move": self.snakeCoordinates})
+            
 
 
     def whenAnArrowKeyIsPressed(self, e) -> None:
