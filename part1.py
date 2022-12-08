@@ -208,7 +208,7 @@ class Game():
         #complete the method implementation below
         #get current snake direction
         currentDirection = self.direction
-        #check direction and depending on direction increase or decrease snake coordinate by 5 in either x or y
+        #check direction and depending on direction increase or decrease snake coordinate by 10 in either x or y
         if currentDirection == "Left":
             return (lastX-10, lastY)
         elif currentDirection == "Right":
