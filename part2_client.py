@@ -1,4 +1,4 @@
-# UDP Socket Server
+# UDP Socket Client
 # Group Name: G29
 # Group Members: Willem Van Dam, Liam Foster
 
